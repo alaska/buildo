@@ -29,6 +29,7 @@ func getTargets() map[string]string {
 			}
 			if filepath.Ext(path) == ".go" {
 				// We've found the first .go file in this directory
+				debug("looking at", path)
 
 				// check for "package main"
 				fh, err := os.Open(path)
@@ -41,12 +42,14 @@ func getTargets() map[string]string {
 				if !mainFinder.MatchReader(buf) {
 					// If the first .go file we find doesn't have "package main"
 					// at the beginning, we're not interested in this directory
+					debug(`does not have "package main"`)
 					processed[fileDir] = true
 					return nil
 				}
 
 				// Found package main, this is a binary
 				targetName := filepath.Base(fileDir)
+				debugf("found \"package main\", adding target [%s]\n", targetName)
 
 				// See if there is a conflicting target name
 				if _, found := targets[targetName]; found {
