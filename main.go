@@ -63,8 +63,8 @@ func main() {
 	architectures := getArchitectures()
 
 	if doList {
-		if flag.NFlag() > 1 {
-			fatal("--list can't be combined with other flags")
+		if flag.NFlag() >= 2 && !debugOut {
+			fatal("--list can only be combined with --debug")
 			longUsage()
 		}
 
