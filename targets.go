@@ -24,8 +24,8 @@ func getTargets() map[string]string {
 			// We're looking at a file somewhere
 
 			fileDir := filepath.Dir(path)
-			// Return if we've already processed a file in the current directory
 			if processed[fileDir] {
+				// only need to process one .go file per directory
 				return nil
 			}
 			if filepath.Ext(path) == ".go" {
@@ -40,6 +40,8 @@ func getTargets() map[string]string {
 				buf := bufio.NewReader(fh)
 
 				if !mainFinder.MatchReader(buf) {
+					// If the first .go file we find doesn't have "package main"
+					// at the beginning, we're not interested in this directory
 					processed[fileDir] = true
 					return nil
 				}
@@ -65,14 +67,13 @@ func getTargets() map[string]string {
 				processed[fileDir] = true
 			}
 		}
-
 		return nil
 	}
 	err := filepath.Walk(cwd, walkFn)
 	if err != nil {
 		fatal("Error scanning directory:", err)
 	}
-	// resolve any conflicting names.
+	// resolve any conflicting target names
 	for targetName, paths := range toResolve {
 		// remove the conflicting entry from the targets list
 		delete(targets, targetName)
@@ -85,8 +86,3 @@ func getTargets() map[string]string {
 	}
 	return targets
 }
-
-/*
-if path[0] == `.` {
-	return filepath.SkipDir
-}*/
