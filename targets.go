@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var mainFinder = regexp.MustCompile(`^(?:/\*(?:.|[\r\n])*?\*/)*|(?://.*\n)*package\s+main`)
+var mainFinder = regexp.MustCompile(`^(?:(?:/\*(?:.|[\r\n])*?\*/)|(?://.*\n))*package\s+main`)
 
 func getTargets() map[string]string {
 	targets := map[string]string{}
