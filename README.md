@@ -35,3 +35,5 @@ EXAMPLES
         $ buildo --gz foo,bar windows_386,linux_386
                 builds foo and bar binaries and gzips them into myproj/myproj_bin.tgz
 ```
+## Brand new
+As of 4/20 12:30:00 EST, this is a brand new repository and the program is currently still in development. As of right now, the checkin is just insurance against loss of work. Sometime in the next couple of days I will add the build portion, followed directly by the parallelization of the build. You probably don't even know this project exists yet, because I haven't told anyone, but if you do happen across it, check back very soon :)
